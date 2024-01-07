@@ -16,6 +16,16 @@ Acess index.html by a double click, or after run ```cd ./CirclesBox/src``` and `
 
 ## Patch Notes
 
+### CirclesBox 1.0.2
+
+- Fix circles collisions detection.
+- New users pointers in game.
+- Add Pointers collision detect.
+- Add restart new game with mouse click.
+- Circle speed increases with game time.
+- Add game points primitive system.
+- Add Gameplay Music.
+
 ### CirclesBox 1.0.1
 
 - New method to detect circle collisions, now only truly unknown collisions are tested.

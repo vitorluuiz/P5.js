@@ -1,0 +1,176 @@
+@font-face {
+  font-family: XTyper;
+  src: url(/src/assets/fonts/XTypewriter/XTypewriter-Regular.ttf);
+}
+
+@font-face {
+  font-family: XTyperBold;
+  src: url(/src/assets/fonts/XTypewriter/XTypewriter-Bold.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: XTyper;
+}
+
+:root {
+  --darkBackground: rgb(50, 50, 50);
+  --greyBackground: rgb(210, 210, 210);
+  --lightFont: #FFF;
+  --darkFont: var(--darkBackground);
+  --borderRadius: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+a,
+h1,
+h2,
+span {
+  color: var(--lightFont);
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+
+/* Header */
+header {
+  padding: 0.5rem 0;
+  background-color: var(--darkBackground);
+}
+
+.support-logo {
+  color: var(--lightFont);
+}
+
+.support-nav {
+  gap: 2rem;
+}
+
+/* Main */
+main {
+  /* background-color: var(--darkBackground); */
+}
+
+/* Modal */
+.modal {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--darkBackground);
+  transition: all 0.4s;
+}
+
+.modal:target {
+  visibility: visible;
+  opacity: 0.9;
+  z-index: 2;
+}
+
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: calc(25vw);
+  min-width: max-content;
+  gap: 1rem;
+  background-color: var(--darkBackground);
+}
+
+.sound-options>.option{
+  display: flex;
+  justify-content: space-between;
+}
+
+.setting {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.setting>h2 {
+  font-size: 1.25rem;
+}
+
+.slider {
+  display: flex;
+  gap: 1rem;
+}
+
+.slider>input {}
+
+.slider>span {
+  width: 2rem;
+  font-size: 1.5rem;
+}
+
+.modal__nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+  gap: 2rem;
+}
+
+.modal__nav>.nav-button {
+  background-color: var(--greyBackground);
+  border-radius: var(--borderRadius);
+  padding: 0.5rem 1.5rem;
+  color: var(--darkFont);
+  font-family: XTyperBold;
+  font-size: 1.5rem;
+}
+
+#settings-modal {}
+
+/* snackbar */
+.snackbar{
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  padding: 2rem;
+  left: 0;
+  top: 0vh;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  transition: all 300ms;
+}
+
+.snackbar.visible{
+  visibility: visible;
+  opacity: 1;
+  top: 10vh;
+}

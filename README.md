@@ -16,6 +16,12 @@ Acess index.html by a double click, or after run ```cd ./CirclesBox/src``` and `
 
 ## Patch Notes
 
+### CirclesBox 1.0.3
+
+- Add WEB GUI.
+- Enable/Disable game sounds
+- Modify game settings.
+
 ### CirclesBox 1.0.2
 
 - Fix circles collisions detection.

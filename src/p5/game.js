@@ -10,7 +10,10 @@ function initGame() {
         return;
     }
 
-    gameMusic.loop();
+    if (MUSIC_SOUND == 'ON') {
+        gameMusic.loop();
+    }
+
     frameRate(FPS);
     frameCount = 0;
     circleList = [];
@@ -32,14 +35,20 @@ function endGame(pointerIndex) {
         pointerList[pointerIndex].drawPointer(255, 0, 0);
     }
     circleList = [];
-    showPoints();
-    gameMusic.stop();
     frameRate(0);
+    showPoints();
+
+    gameMusic.stop();
 }
 
-function restartGame(){
+function restartGame() {
     endGame();
     initGame();
+}
+
+function showStartGame() {
+    fill(0);
+    text(`Click to start`, windowWidth * 0.5, windowHeight * 0.5);
 }
 
 function showPoints() {

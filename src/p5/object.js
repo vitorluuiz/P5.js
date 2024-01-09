@@ -62,7 +62,9 @@ class Circle {
         circleList[otherIndex].cord.vX = lastVx;
         circleList[otherIndex].cord.vY = lastVy;
 
-        bounceSounds[0].play();
+        if (OBJBOUNCE_SOUND == "ON") {
+            bounceSounds[0].play();
+        }
     }
 
     detectWindowcollision(windowWidth, windowHeight) {
@@ -76,7 +78,10 @@ class Circle {
                 this.cord.x = this.struct.radius;
             }
             this.cord.vX *= -1;
-            bounceSounds[1].play();
+
+            if (OBJBOUNCE_SOUND == "ON") {
+                bounceSounds[1].play();
+            }
         }
 
         if (
@@ -89,7 +94,10 @@ class Circle {
                 this.cord.y = this.struct.radius;
             }
             this.cord.vY *= -1;
-            bounceSounds[2].play();
+
+            if (OBJBOUNCE_SOUND == "ON") {
+                bounceSounds[1].play();
+            }
         }
     };
 }

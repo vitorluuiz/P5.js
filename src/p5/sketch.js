@@ -1,7 +1,11 @@
-const CPU_RADIUS = 14;           // Radius of CPU circles
-const CPU_UNITS = 7;             // Count of CPU circles on canvas
+let settings;
+let CPU_RADIUS;           // Radius of CPU circles
+let CPU_UNITS;            // Count of CPU circles on canvas
+let MAX_CPU_V;            // Max CPU velocity
+let OBJBOUNCE_SOUND;
+let MUSIC_SOUND;
+
 const USER_POINTERS = 1;
-const MAX_CPU_V = 10;             // Max CPU velocity
 const FPS = 60;               // Frames per second of canvas
 const TEXT_SIZE = 70;
 
@@ -16,29 +20,45 @@ function preload() {
   bounceSounds.push(loadSound('./assets/sounds/bounceWall2'));
 }
 
+function startGame() {
+  initGame();
+}
+
 // ON INIT
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(windowWidth, windowHeight);
+  canvas.mousePressed(startGame);
 
-  textSize(TEXT_SIZE);
+  textSize(64);
   textAlign(CENTER);
   textFont(gameFont);
 
-  restartGame();
+  settings = getSettings();
+  MUSIC_SOUND = settings.options.music;
+  OBJBOUNCE_SOUND = settings.options.bounce;
+  MAX_CPU_V = settings.options.velocity;
+  CPU_UNITS = settings.options.units;
+  CPU_RADIUS = settings.options.radius;
+
+  // initGame();
 }
 
 function windowResized() {
-  setup();
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function mousePressed() {
-  initGame();
+  setup();
 }
 
 // EACH FRAME
 function draw() {
   background(200);
-  showPoints();
+  if (circleList.length == 0) {
+    showStartGame();
+  } else {
+    showPoints();
+  }
 
   // Detect CPU Objs collisions
   for (var i = circleList.length - 1; i >= 0; i--) {

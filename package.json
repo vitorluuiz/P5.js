@@ -1,0 +1,22 @@
+{
+  "name": "circlesbox",
+  "version": "1.0.4",
+  "description": "circlebox http server.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitorluuiz/Circlesbox.js.git"
+  },
+  "author": "Vitor Luiz de Carvalho Gonçalves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vitorluuiz/Circlesbox.js/issues"
+  },
+  "homepage": "https://github.com/vitorluuiz/Circlesbox.js#readme",
+  "dependencies": {
+  }
+}

@@ -1,4 +1,3 @@
-let settings;
 let CPU_RADIUS;           // Radius of CPU circles
 let CPU_UNITS;            // Count of CPU circles on canvas
 let MAX_CPU_V;            // Max CPU velocity
@@ -11,44 +10,37 @@ const TEXT_SIZE = 70;
 
 // BEFORE
 function preload() {
-  gameFont = loadFont('assets/fonts/XTypewriter/XTypewriter-Regular.ttf');
+  gameFont = loadFont('/src/assets/fonts/XTypewriter/XTypewriter-Regular.ttf');
 
   soundFormats('wav');
-  gameMusic = loadSound('./assets/sounds/gameMusic');
-  bounceSounds.push(loadSound('./assets/sounds/bounce1'));
-  bounceSounds.push(loadSound('./assets/sounds/bounceWall1'));
-  bounceSounds.push(loadSound('./assets/sounds/bounceWall2'));
-}
-
-function startGame() {
-  initGame();
+  gameMusic = loadSound('/src/assets/sounds/gameMusic');
+  bounceSounds.push(loadSound('/src/assets/sounds/bounce1'));
+  bounceSounds.push(loadSound('/src/assets/sounds/bounceWall1'));
+  bounceSounds.push(loadSound('/src/assets/sounds/bounceWall2'));
 }
 
 // ON INIT
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
-  canvas.mousePressed(startGame);
 
   textSize(64);
   textAlign(CENTER);
   textFont(gameFont);
 
-  settings = getSettings();
-  MUSIC_SOUND = settings.options.music;
-  OBJBOUNCE_SOUND = settings.options.bounce;
-  MAX_CPU_V = settings.options.velocity;
-  CPU_UNITS = settings.options.units;
-  CPU_RADIUS = settings.options.radius;
+  canvas.mousePressed(function () {
+    let settings = getSettings();
+    MUSIC_SOUND = settings.options.music;
+    OBJBOUNCE_SOUND = settings.options.bounce;
+    MAX_CPU_V = settings.options.velocity;
+    CPU_UNITS = settings.options.units;
+    CPU_RADIUS = settings.options.radius;
 
-  // initGame();
+    initGame();
+  });
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-}
-
-function mousePressed() {
-  setup();
 }
 
 // EACH FRAME

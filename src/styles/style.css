@@ -1,18 +1,8 @@
-@font-face {
-  font-family: XTyper;
-  src: url(/src/assets/fonts/XTypewriter/XTypewriter-Regular.ttf);
-}
-
-@font-face {
-  font-family: XTyperBold;
-  src: url(/src/assets/fonts/XTypewriter/XTypewriter-Bold.ttf);
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: XTyper;
+  font-family: 'XTyperRegular';
 }
 
 :root {
@@ -148,7 +138,7 @@ main {
   border-radius: var(--borderRadius);
   padding: 0.5rem 1.5rem;
   color: var(--darkFont);
-  font-family: XTyperBold;
+  font-family: 'XTyperBold';
   font-size: 1.5rem;
 }
 

@@ -10,13 +10,13 @@ const TEXT_SIZE = 70;
 
 // BEFORE
 function preload() {
-  gameFont = loadFont('/src/assets/fonts/XTypewriter/XTypewriter-Regular.ttf');
+  gameFont = loadFont('assets/fonts/XTypewriter/XTypewriter-Regular.ttf');
 
   soundFormats('wav');
-  gameMusic = loadSound('/src/assets/sounds/gameMusic');
-  bounceSounds.push(loadSound('/src/assets/sounds/bounce1'));
-  bounceSounds.push(loadSound('/src/assets/sounds/bounceWall1'));
-  bounceSounds.push(loadSound('/src/assets/sounds/bounceWall2'));
+  gameMusic = loadSound('assets/sounds/gameMusic');
+  bounceSounds.push(loadSound('assets/sounds/bounce1'));
+  bounceSounds.push(loadSound('assets/sounds/bounceWall1'));
+  bounceSounds.push(loadSound('assets/sounds/bounceWall2'));
 }
 
 // ON INIT

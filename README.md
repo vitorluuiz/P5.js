@@ -24,6 +24,10 @@ Git bash is a tool that you will use to install a copy from this repository stor
 
 ## Patch Notes
 
+### CirclesBox 1.0.4x
+
+- Fix Vercel Deploy.
+
 ### CirclesBox 1.0.4
 
 - Setup bugs fix.

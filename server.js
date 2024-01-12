@@ -3,17 +3,16 @@ const fs = require('fs');
 const path = require('path');
 
 const server = http.createServer((req, res) => {
-    let filePath = '.' + req.url;
-    if (filePath === './') {
+    let filePath = './src' + req.url;
+    if (filePath === './src/') {
         filePath = './src/index.html';
     }
 
-    console.log(filePath);
     fs.readFile(filePath, (err, content) => {
         if (err) {
             if (err.code === 'ENOENT') {
                 res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end('404 Not Found');
+                res.end('404 Not Foundoowdad');
             } else {
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
                 res.end('500 Internal Server Error');
@@ -28,5 +27,5 @@ const server = http.createServer((req, res) => {
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });

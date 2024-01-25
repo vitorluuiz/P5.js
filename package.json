@@ -3,6 +3,11 @@
   "version": "1.0.4",
   "description": "circlebox http server.",
   "main": "server.js",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -17,6 +22,8 @@
     "url": "https://github.com/vitorluuiz/Circlesbox.js/issues"
   },
   "homepage": "https://github.com/vitorluuiz/Circlesbox.js#readme",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

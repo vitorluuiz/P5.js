@@ -24,6 +24,7 @@ class Pointer {
 
     drawPointer(r, g, b) {
         fill(color(r, g, b));
+        // console.log(this.cord.x, this.cord.y, this.struct.radius);
         circle(this.cord.x, this.cord.y, this.struct.radius);
     }
 

@@ -1,8 +1,8 @@
 let CPU_RADIUS;           // Radius of CPU circles
 let CPU_UNITS;            // Count of CPU circles on canvas
 let MAX_CPU_V;            // Max CPU velocity
-let OBJBOUNCE_SOUND;
-let MUSIC_SOUND;
+let OBJBOUNCE_SOUND;      // ON/OFF bounce sound
+let MUSIC_SOUND;          // ON/OFF music sound
 
 const USER_POINTERS = 1;
 const FPS = 60;               // Frames per second of canvas
@@ -10,13 +10,13 @@ const TEXT_SIZE = 70;
 
 // BEFORE
 function preload() {
-  gameFont = loadFont('assets/fonts/XTypewriter/XTypewriter-Regular.ttf');
+  gameFont = loadFont('/src/assets/fonts/XTypewriter/XTypewriter-Regular.ttf');
 
   soundFormats('wav');
-  gameMusic = loadSound('assets/sounds/gameMusic');
-  bounceSounds.push(loadSound('assets/sounds/bounce1'));
-  bounceSounds.push(loadSound('assets/sounds/bounceWall1'));
-  bounceSounds.push(loadSound('assets/sounds/bounceWall2'));
+  gameMusic = loadSound('/src/assets/sounds/gameMusic');
+  bounceSounds.push(loadSound('/src/assets/sounds/bounce1'));
+  bounceSounds.push(loadSound('/src/assets/sounds/bounceWall1'));
+  bounceSounds.push(loadSound('/src/assets/sounds/bounceWall2'));
 }
 
 // ON INIT
@@ -28,13 +28,14 @@ function setup() {
   textFont(gameFont);
 
   canvas.mousePressed(function () {
-    let settings = getSettings();
-    MUSIC_SOUND = settings.options.music;
-    OBJBOUNCE_SOUND = settings.options.bounce;
-    MAX_CPU_V = settings.options.velocity;
-    CPU_UNITS = settings.options.units;
-    CPU_RADIUS = settings.options.radius;
+    const settings = getGameSettings();
+    CPU_RADIUS = settings.radius;
+    CPU_UNITS = settings.units;
+    MAX_CPU_V = settings.velocity;
+    OBJBOUNCE_SOUND = settings.bounceSound;
+    MUSIC_SOUND = settings.music;
 
+    console.log(settings);
     initGame();
   });
 }
@@ -76,4 +77,18 @@ function draw() {
       endGame(i);
     }
   };
+}
+
+const getGameSettings = () => {
+  if (sessionStorage.getItem('gameSettings') === null) {
+    sessionStorage.setItem('gameSettings', JSON.stringify({
+      radius: 14,
+      units: 7,
+      velocity: 10,
+      music: "ON",
+      bounceSound: "ON"
+    }))
+  }
+
+  return JSON.parse(sessionStorage.getItem('gameSettings'));
 }

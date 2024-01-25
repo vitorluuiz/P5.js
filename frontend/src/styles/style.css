@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "XTyperBold";
+  src: url("/src/assets/fonts/XTypewriter/XTypewriter-Bold.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "XTyperRegular";
+  src: url("src/assets/fonts/XTypewriter/XTypewriter-Regular.ttf")
+    format("truetype");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "XTyperRegular";
+}
+
+:root {
+  --darkBackground: rgb(50, 50, 50);
+  --greyBackground: rgb(210, 210, 210);
+  --lightFont: #fff;
+  --darkFont: var(--darkBackground);
+  --borderRadius: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+a,
+h1,
+h2,
+span {
+  color: var(--lightFont);
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}

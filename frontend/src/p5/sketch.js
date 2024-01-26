@@ -4,6 +4,8 @@ let MAX_CPU_V;            // Max CPU velocity
 let OBJBOUNCE_SOUND;
 let MUSIC_SOUND;
 
+let peer;
+
 const USER_POINTERS = 1;
 const FPS = 60;               // Frames per second of canvas
 const TEXT_SIZE = 70;

@@ -16,6 +16,9 @@
   <script src="scripts/windowLoad.js"></script>
   <script src="scripts/handleGameSettings.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/peerjs@1.3.2/dist/peerjs.min.js"></script>
+  <script src="p2p/peer.js"></script>
+
   <link rel="stylesheet" href="styles/game.css">
   <link rel="stylesheet" href="styles/style.css">
   <style>
@@ -23,6 +26,7 @@
       font-family: 'XTyperBold';
       src: url('assets/fonts/XTypewriter/XTypewriter-Bold.ttf') format('truetype');
     }
+
     @font-face {
       font-family: 'XTyperRegular';
       src: url('assets/fonts/XTypewriter/XTypewriter-Regular.ttf') format('truetype');
@@ -42,6 +46,7 @@
         </a>
       </div>
       <nav class="support-nav flex-row justify-between align-center">
+        <a href="#rooms-modal">Rooms</a>
         <a href="#settings-modal" onClick="displaySettings()">Settings</a>
         <a href="#">Leaderboard</a>
         <a href="#">Help</a>
@@ -49,6 +54,32 @@
     </section>
   </header>
   <main>
+    <!-- Rooms Modal -->
+    <div id="rooms-modal" class="modal">
+      <div class="modal__header">
+        <a href="#">Exit</a>
+      </div>
+      <div class="modal__content" id="rooms">
+        <div class="room">
+          <div class="room-info">
+            <span>uhui3-dawdwad-dwadaw-dwa</span>
+            <span>4 Players</span>
+          </div>
+          <a href="#">Join</a>
+        </div>
+        <div class="room">
+          <div class="room-info">
+            <span>uhui3-dawdwad-dwadaw-dwa</span>
+            <span>4 Players</span>
+          </div>
+          <a href="#">Join</a>
+        </div>
+
+        <a class="modal__nav" href="#">
+          Create a room
+        </a>
+      </div>
+    </div>
     <!-- Settings Modal -->
     <div id="settings-modal" class="modal">
       <div class="modal__content">

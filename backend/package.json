@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A server to serve dynamic data to circlesBox client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/vitorluuiz/p5.js.git"
+  },
+  "author": "Vitor Luiz Gonçalves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vitorluuiz/p5.js/issues"
+  },
+  "homepage": "https://github.com/vitorluuiz/p5.js#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}

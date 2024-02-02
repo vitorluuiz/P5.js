@@ -162,14 +162,20 @@ main {
   /* background-color: purple; */
 }
 
-.room{
+#rooms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.room {
   display: flex;
   justify-content: space-between;
   gap: 2rem;
   /* background-color: blue; */
 }
 
-.room-info{
+.room-info {
   display: flex;
   gap: 1rem;
 }

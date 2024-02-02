@@ -3,16 +3,15 @@ const fs = require('fs');
 const path = require('path');
 
 const server = http.createServer((req, res) => {
-    let filePath = './src' + req.url;
-    if (filePath === './src/') {
-        filePath = './src/index.html';
+    let filePath = './frontend/src' + req.url;
+    if (filePath === './frontend/src/') {
+        filePath = './frontend/src/index.html';
     }
-
     fs.readFile(filePath, (err, content) => {
         if (err) {
             if (err.code === 'ENOENT') {
                 res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end('404 Not Foundoowdad');
+                res.end('404 Not Found');
             } else {
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
                 res.end('500 Internal Server Error');

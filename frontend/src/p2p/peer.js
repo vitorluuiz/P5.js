@@ -55,6 +55,8 @@ class CustomPeer {
     onData(data) {
         if (data.type === 'connList') {
             this.onReceiveConnections(data.message);
+        } else if (data.type === 'gameTick') {
+            onReceiveGameTick(data.message);
         } else {
             console.log(data);
         }
@@ -66,6 +68,7 @@ class CustomPeer {
             console.log("Tentando conexão com ", conn);
             this.connectToPeer(conn);
         })
+        onPlayerJoin(connections);
     }
 
     brodcast(data) {
@@ -74,5 +77,9 @@ class CustomPeer {
                 c.send(data);
             });
         });
+    }
+
+    onReceiveGameTick(tick) {
+
     }
 }

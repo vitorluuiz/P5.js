@@ -37,10 +37,10 @@ class Circle {
         do {
             this.cord.x = random(this.struct.radius, windowWidth - this.struct.radius);
             this.cord.y = random(this.struct.radius, windowHeight - this.struct.radius);
-        } while (this.detectCollision(-1) != -1);
+        } while (this.checkCollision(-1) != -1);
     }
 
-    detectCollision(j) {
+    checkCollision(j) {
         let index = -1;
 
         for (let i = circleList.length - 1; i > j; i--) {

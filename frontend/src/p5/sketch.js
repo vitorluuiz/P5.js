@@ -1,12 +1,27 @@
+// Game Settings
+let gameFont;
+let bounceSounds = [];
+let gameMusic;
+
 let CPU_RADIUS;           // Radius of CPU circles
 let CPU_UNITS;            // Count of CPU circles on canvas
 let MAX_CPU_V;            // Max CPU velocity
 let OBJBOUNCE_SOUND;
 let MUSIC_SOUND;
 
-const USER_POINTERS = 1;
-const FPS = 60;               // Frames per second of canvas
+const FPS = 60;           // Frames per second of canvas
 const TEXT_SIZE = 70;
+
+let players = [{id: 'Player 2', name: 'Player 2'}];
+let pointerList = [];
+let loosersList = [];
+let circleList = [];
+
+const sendPointerPosition = (x, y) => {
+  const pointer = new PointerPosition(peer.peer._id, x, y);
+  const message = new GameMessage('pointerPosition', pointer);
+  peer.brodcast(new Message('gameTick', message));
+}
 
 // BEFORE
 function preload() {
@@ -23,7 +38,7 @@ function preload() {
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
 
-  textSize(64);
+  textSize(TEXT_SIZE);
   textAlign(CENTER);
   textFont(gameFont);
 
@@ -34,7 +49,6 @@ function setup() {
     MAX_CPU_V = settings.options.velocity;
     CPU_UNITS = settings.options.units;
     CPU_RADIUS = settings.options.radius;
-
     initGame();
   });
 }
@@ -46,6 +60,7 @@ function windowResized() {
 // EACH FRAME
 function draw() {
   background(200);
+  textSize(TEXT_SIZE);
   if (circleList.length == 0) {
     showStartGame();
   } else {
@@ -55,25 +70,41 @@ function draw() {
   // Detect CPU Objs collisions
   for (var i = circleList.length - 1; i >= 0; i--) {
     circleList[i].detectWindowcollision(windowWidth, windowHeight);
-    let hasCollision = circleList[i].detectCollision(i);
+    let hasCollision = circleList[i].checkCollision(i);
     if (hasCollision != -1) {
       circleList[i].handleCollision(hasCollision);
     }
   }
 
   // Draw CPU Objs
-  for (var i = circleList.length - 1; i >= 0; i--) {
+  for (let i = circleList.length - 1; i >= 0; i--) {
     circleList[i].move();
     circleList[i].display();
   }
 
-  for (i = 0; i < pointerList.length; i++) {
-    pointerList[i].movePointer(mouseX, mouseY);
-    pointerList[i].drawPointer(255, 255, 255);
-    let hasCollision = pointerList[i].detectCollision();
+  // Move, and checkCollision of my pointer
+  if (pointerList[0] && pointerList[0].stats.isAlive) {
+    pointerList[0].movePointer(mouseX, mouseY);
 
+    let hasCollision = pointerList[0].checkCollision();
     if (hasCollision != -1) {
-      endGame(i);
+      pointerList[0].stats.isAlive = false;
+      loosersList.push(pointerList[0]);
+
+      if (loosersList.length == pointerList.length) {
+        endGame();
+      }
     }
-  };
+  }
+
+  // Draw live and loosers pointers
+  for (let i = pointerList.length - 1; i >= 0; i--) {
+    if (pointerList[i].stats.isAlive) {
+      pointerList[i].drawPointer(255, 255, 255);
+    } else {
+      pointerList[i].drawPointer(255, 0, 0);
+    }
+  }
+
+  // sendPointerPosition(mouseX, mouseY);
 }

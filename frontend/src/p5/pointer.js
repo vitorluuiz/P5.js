@@ -1,5 +1,7 @@
 class Pointer {
-    constructor(_x, _y, _radius) {
+    constructor(_id, _name, _x, _y, _radius) {
+        this.id = _id;
+        this.name = _name;
         this.cord = {
             x: _x,
             y: _y,
@@ -7,9 +9,13 @@ class Pointer {
         this.struct = {
             radius: _radius,
         };
+        this.stats = {
+            voteStart: false,
+            isAlive: true,
+        }
     };
 
-    detectCollision() {
+    checkCollision() {
         let index = -1;
         for (let i = 0; i < circleList.length; i++) {
             let distance = dist(this.cord.x, this.cord.y, circleList[i].cord.x, circleList[i].cord.y);
@@ -23,6 +29,9 @@ class Pointer {
     }
 
     drawPointer(r, g, b) {
+        fill(0);
+        textSize(16);
+        text(this.name, this.cord.x, this.cord.y - this.struct.radius - 5);
         fill(color(r, g, b));
         circle(this.cord.x, this.cord.y, this.struct.radius);
     }

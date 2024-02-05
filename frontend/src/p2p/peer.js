@@ -1,7 +1,6 @@
 class CustomPeer {
     constructor() {
         this.isHost = true;
-        this.connections = [];
         this.peer = new Peer();
         this.idPromise = new Promise((resolve) => {
             this.peer.on('open', (id) => {
@@ -11,75 +10,64 @@ class CustomPeer {
         this.peer.on('connection', (conn) => this.onConnection(conn));
     }
 
-    async getId() {
-        try {
-            return await this.idPromise;
-        } catch (error) {
-            console.error("Erro ao obter o ID:", error);
-            throw error;
-        }
-    }
-
-    connectToPeer(id) {
+    // this peer is called to join to network
+    connectToPeer(idPeer) {
+        // if this peer is connecting to another peer, it's not the host
         this.isHost = false;
-        const conn = this.peer.connect(id);
+        const conn = this.peer.connect(idPeer);
 
-        conn.on('open', () => {
-            this.onConnection(conn);
-
-            const message = new Message('connList', this.connections);
-            conn.send(message);
-        })
+        this.onConnection(conn);
 
         conn.on('close', () => {
-            this.connections = this.connections.filter((e) => e.peer !== conn.peer);
-
             conn.close();
-            console.log(`Conexão com ${conn.peer} fechada!`);
         });
     }
 
+    // This function is called when this peer connect to another peer
     onConnection(conn) {
-        conn.on('data', (data) => this.onData(data));
+        conn.on('open', () => {
+            conn.on('data', (data) => this.onData(data));
+            conn.send(`Hi ${conn.peer}, ${conn.provider._id} here!`);
 
-        this.connections.push(conn.peer);
+            if (this.isHost) {
+                const connections = Array.from(this.peer._connections.keys());
+                const connList = new Message('connList', connections);
 
-        if (this.isHost) {
-            const message = new Message('connList', this.connections);
-            this.brodcast(message);
-        }
-
-        conn.send(`Hi ${conn.peer}, ${conn.provider._id} here!`);
+                conn.send(connList); //an error occurs here see the console
+            }
+        });
     }
 
-    onData(data) {
-        if (data.type === 'connList') {
-            this.onReceiveConnections(data.message);
-        } else if (data.type === 'gameTick') {
-            onReceiveGameTick(data.message);
-        } else {
-            console.log(data);
-        }
-    }
-
-    onReceiveConnections(connections) {
-        const newConnections = connections.filter((conn) => !this.connections.includes(conn) && conn !== this.peer._id);
-        newConnections.forEach((conn) => {
-            console.log("Tentando conexão com ", conn);
-            this.connectToPeer(conn);
-        })
-        onPlayerJoin(connections);
-    }
-
+    // send a message for all peer connected
     brodcast(data) {
         this.peer._connections.forEach((conn) => {
-            conn.forEach((c) => {
-                c.send(data);
-            });
+            conn[0].send(data);
         });
     }
 
-    onReceiveGameTick(tick) {
+    // This function is called when this peer receives a new message
+    onData(data) {
+        switch (data.type) {
+            case 'connList':
+                this.onReceiveConnections(data.message);
+                break;
+            case 'gameTick':
+                this.onReceiveGameTick(data.message);
+                break;
+            default:
+                console.log(data);
+                break;
+        }
+    }
 
+    // This function is called when this peer receives the current peers on network
+    onReceiveConnections(connections) {
+        // handle connections received from the host
+        const utilsConnections = connections.filter((conn) => conn !== this.peer._id);
+
+        // Connecting to all the other peers
+        utilsConnections.forEach((conn) => {
+            this.connectToPeer(conn);
+        })
     }
 }

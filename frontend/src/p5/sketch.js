@@ -12,16 +12,10 @@ let MUSIC_SOUND;
 const FPS = 60;           // Frames per second of canvas
 const TEXT_SIZE = 70;
 
-let players = [{id: 'Player 2', name: 'Player 2'}];
+let players = [];
 let pointerList = [];
 let loosersList = [];
 let circleList = [];
-
-const sendPointerPosition = (x, y) => {
-  const pointer = new PointerPosition(peer.peer._id, x, y);
-  const message = new GameMessage('pointerPosition', pointer);
-  peer.brodcast(new Message('gameTick', message));
-}
 
 // BEFORE
 function preload() {
@@ -105,6 +99,4 @@ function draw() {
       pointerList[i].drawPointer(255, 0, 0);
     }
   }
-
-  // sendPointerPosition(mouseX, mouseY);
 }

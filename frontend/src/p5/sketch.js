@@ -1,21 +1,10 @@
 // Game Settings
-let gameFont;
-let bounceSounds = [];
-let gameMusic;
+let gameState = 'stoped';
 
-let CPU_RADIUS;           // Radius of CPU circles
-let CPU_UNITS;            // Count of CPU circles on canvas
-let MAX_CPU_V;            // Max CPU velocity
-let OBJBOUNCE_SOUND;
-let MUSIC_SOUND;
-
-const FPS = 60;           // Frames per second of canvas
-const TEXT_SIZE = 70;
-
-let players = [];
-let pointerList = [];
-let loosersList = [];
-let circleList = [];
+const handleGameState = (state) => {
+  gameState = state;
+  console.log(gameState);
+};
 
 // BEFORE
 function preload() {
@@ -32,18 +21,13 @@ function preload() {
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
 
-  textSize(TEXT_SIZE);
   textAlign(CENTER);
   textFont(gameFont);
+  frameRate(1);
 
+  // Detects if the mouse is pressed inside the canvas
   canvas.mousePressed(function () {
-    let settings = getSettings();
-    MUSIC_SOUND = settings.options.music;
-    OBJBOUNCE_SOUND = settings.options.bounce;
-    MAX_CPU_V = settings.options.velocity;
-    CPU_UNITS = settings.options.units;
-    CPU_RADIUS = settings.options.radius;
-    initGame();
+    voteForGameStart();
   });
 }
 
@@ -55,15 +39,16 @@ function windowResized() {
 function draw() {
   background(200);
   textSize(TEXT_SIZE);
-  if (circleList.length == 0) {
-    showStartGame();
-  } else {
+
+  if (gameState === 'running') {
     showPoints();
+  } else {
+    showStartGame();
   }
 
   // Detect CPU Objs collisions
   for (var i = circleList.length - 1; i >= 0; i--) {
-    circleList[i].detectWindowcollision(windowWidth, windowHeight);
+    circleList[i].checkWindowcollision(windowWidth, windowHeight);
     let hasCollision = circleList[i].checkCollision(i);
     if (hasCollision != -1) {
       circleList[i].handleCollision(hasCollision);
@@ -82,13 +67,16 @@ function draw() {
 
     let hasCollision = pointerList[0].checkCollision();
     if (hasCollision != -1) {
+      sendLossEvent();
       pointerList[0].stats.isAlive = false;
       loosersList.push(pointerList[0]);
 
-      if (loosersList.length == pointerList.length) {
-        endGame();
+      if (loosersList.length === pointerList.length) {
+        emitGameEnd();
       }
     }
+
+    sendPointerPosition(mouseX, mouseY);
   }
 
   // Draw live and loosers pointers

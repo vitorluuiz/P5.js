@@ -67,7 +67,7 @@ class Circle {
         }
     }
 
-    detectWindowcollision(windowWidth, windowHeight) {
+    checkWindowcollision(windowWidth, windowHeight) {
         if (
             this.cord.x + this.struct.radius > windowWidth ||
             this.cord.x - this.struct.radius < 0

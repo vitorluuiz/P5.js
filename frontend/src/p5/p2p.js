@@ -13,6 +13,13 @@ class PointerPosition {
     }
 }
 
+class StartEvent {
+    constructor(idPeer, hostCircles) {
+        this.idPeer = idPeer;
+        this.hostCircles = hostCircles;
+    }
+}
+
 onReceiveGameMessage = (message) => {
     switch (message.type) {
         case 'voteGameStart':
@@ -44,8 +51,11 @@ const sendLossEvent = () => {
 }
 
 const onReceiveLossEvent = (idPeer) => {
-    const loserPointer = pointerList.find((p) => p.id === idPeer).stats.isAlive = false;
-    loosersList.push(loserPointer);
+    const loserPointer = pointerList.find((p) => p.id === idPeer);
+    if (loserPointer) {
+        loserPointer.stats.isAlive = false;
+        loosersList.push(loserPointer);
+    }
 }
 
 const sendPointerPosition = (x, y) => {
@@ -59,17 +69,18 @@ const sendPointerPosition = (x, y) => {
 const onReceivePointerPosition = (message) => {
     const pointerIndex = pointerList.findIndex((p) => p.id == message.id);
 
-    pointerList[pointerIndex].cord.x = message.x;
-    pointerList[pointerIndex].cord.y = message.y;
+    if (pointerList[pointerIndex]) {
+        pointerList[pointerIndex].cord.x = message.x;
+        pointerList[pointerIndex].cord.y = message.y;
+    }
 };
 
 const voteForGameStart = () => {
-    const gameMessage = new GameMessage('voteGameStart', peer.myPeer._id);
-    const message = new Message('gameMessage', gameMessage);
-
     if (peer.isHost) {
-        emitGameStart();
+        initGame();
     } else {
+        const gameMessage = new GameMessage('voteGameStart', peer.myPeer._id);
+        const message = new Message('gameMessage', gameMessage);
         peer.myPeer.connections[peer.myHost][0].send(message);
     }
 }
@@ -92,9 +103,10 @@ const onReceiveStartVote = (idPeer) => {
 }
 
 const emitGameStart = () => {
-    const gameMessage = new GameMessage('gameStart', peer.myPeer._id);
+    const _circleList = JSON.parse(JSON.stringify(circleList));
+    const startMessage = new StartEvent(peer.myPeer._id, _circleList);
+    const gameMessage = new GameMessage('gameStart', startMessage);
     const message = new Message('gameMessage', gameMessage);
-    initGame();
 
     peer.brodcast(message);
 }
@@ -107,9 +119,9 @@ const emitGameEnd = () => {
     peer.brodcast(message);
 }
 
-const onReceiveGameStart = (idPeer) => {
-    if (idPeer === peer.myHost) {
-        initGame();
+const onReceiveGameStart = (message) => {
+    if (message.idPeer === peer.myHost) {
+        initGame(message.hostCircles);
     }
 }
 

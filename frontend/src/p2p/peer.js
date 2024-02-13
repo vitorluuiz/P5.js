@@ -41,7 +41,6 @@ class CustomPeer {
         conn.on('open', () => {
             conn.on('data', (data) => this.onData(data));
             conn.send(`Hi ${conn.peer}, ${conn.provider._id} here!`);
-            // onPlayerJoin(conn.peer);
 
             if (this.isHost) {
                 const connections = this.getMyConnections();

@@ -1,16 +1,16 @@
 class Circle {
-    constructor(windowWidth, windowHeight, _radius, _mass, _x, _y, _vX, _vY) {
+    constructor(radius, mass, x, y, vX, vY) {
         this.id = circleList.length;
         this.struct = {
-            radius: _radius ?? random(0, 50),
+            radius: radius,
             circum: () => this.struct.radius * 2,
-            mass: _mass ?? random(0, 10),
+            mass: mass,
         };
         this.cord = {
-            x: _x ?? random(this.struct.radius, windowWidth - this.struct.radius),
-            y: _y ?? random(this.struct.radius, windowHeight - this.struct.radius),
-            vX: _vX ?? random(-MAX_CPU_V, MAX_CPU_V),
-            vY: _vY ?? random(-MAX_CPU_V, MAX_CPU_V),
+            x: x,
+            y: y,
+            vX: vX,
+            vY: vY,
         };
         this.color = {
             r: random(255),

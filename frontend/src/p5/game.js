@@ -25,7 +25,7 @@ let loosersList = [];
 let circleList = [];
 
 // Function that init the game
-function initGame() {
+function initGame(hostCircles) {
     if (gameState === 'running') {
         return;
     }
@@ -55,9 +55,35 @@ function initGame() {
     for (let n = 0; n < players.length; n++)
         pointerList.push(new Pointer(players[n].id, players[n].name, windowWidth / 2, windowHeight / 2, CPU_RADIUS));
 
-    // Amount of CPU Objs
-    for (let n = 0; n < CPU_UNITS; n++)
-        circleList.push(new Circle(windowWidth, windowHeight, CPU_RADIUS * 2, 1));
+    if (hostCircles === undefined) {
+        // Amount of CPU Objs
+        const _radius = CPU_RADIUS * 2;
+        const _mass = 1;
+        for (let n = 0; n < CPU_UNITS; n++)
+            circleList.push(new Circle(_radius, _mass,
+                random(_radius, windowWidth - _radius),
+                random(_radius, windowHeight - _radius),
+                random(-MAX_CPU_V, MAX_CPU_V),
+                random(-MAX_CPU_V, MAX_CPU_V)
+            ));
+
+        emitGameStart();
+    } else {
+        hostCircles.forEach((circle) => {
+            // For an unknown reason, the circle object is not being created correctly with the following circle.cords props
+            // circle.cord.x, circle.cord.y, circle.cord.vX, circle.cord.vY
+            const _circle = new Circle(circle.struct.radius, circle.struct.mass);
+            _circle.cord.x = circle.cord.x;
+            _circle.cord.y = circle.cord.y;
+            _circle.cord.vX = circle.cord.vX;
+            _circle.cord.vY = circle.cord.vY;
+            _circle.color.r = circle.color.r;
+            _circle.color.g = circle.color.g;
+            _circle.color.b = circle.color.b;
+            circleList.push(_circle);
+        });
+
+    }
 
     handleGameState('running');
 }

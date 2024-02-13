@@ -1,11 +1,3 @@
-// Game Settings
-let gameState = 'stoped';
-
-const handleGameState = (state) => {
-  gameState = state;
-  console.log(gameState);
-};
-
 // BEFORE
 function preload() {
   gameFont = loadFont('assets/fonts/XTypewriter/XTypewriter-Regular.ttf');
@@ -58,24 +50,31 @@ function draw() {
   // Draw CPU Objs
   for (let i = circleList.length - 1; i >= 0; i--) {
     circleList[i].move();
-    circleList[i].display();
+    circleList[i].draw();
   }
 
-  // Move, and checkCollision of my pointer
+  // If this peer is alive, move and check collisions
   if (pointerList[0] && pointerList[0].stats.isAlive) {
     pointerList[0].movePointer(mouseX, mouseY);
 
     let hasCollision = pointerList[0].checkCollision();
+
+    // If there is a collision, handle loss
     if (hasCollision != -1) {
+      // send loss event to others peers
       sendLossEvent();
+      
+      // change pointer status to dead and add to loosers list
       pointerList[0].stats.isAlive = false;
       loosersList.push(pointerList[0]);
 
+      // If all peers are dead, emit game end
       if (loosersList.length === pointerList.length) {
         emitGameEnd();
       }
     }
 
+    // If dont have collision, send pointer position to others peers
     sendPointerPosition(mouseX, mouseY);
   }
 

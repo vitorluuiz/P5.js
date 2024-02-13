@@ -27,13 +27,13 @@ class CustomPeer {
 
         this.onConnection(conn);
 
-        conn.on('close', () => {
-            this.isHost = true;
-            this.myHost = '';
-            console.log('Connection closed');
+        // conn.on('close', () => {
+        //     this.isHost = true;
+        //     this.myHost = '';
+        //     console.log('Connection closed');
 
-            conn.close();
-        });
+        //     conn.close();
+        // });
     }
 
     // This function is called when this peer connect to another peer
@@ -48,6 +48,14 @@ class CustomPeer {
 
                 conn.send(connList);
             }
+        });
+
+        conn.on('close', () => {
+            console.log("Conn closed");
+        });
+
+        conn.on('error', (err) => {
+            console.log(err);
         });
     }
 

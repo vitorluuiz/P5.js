@@ -14,35 +14,36 @@ class PointerPosition {
 }
 
 class StartEvent {
-    constructor(idPeer, hostCircles) {
+    constructor(idPeer, startState) {
         this.idPeer = idPeer;
-        this.hostCircles = hostCircles;
+        this.startState = startState;
     }
 }
 
-onReceiveGameMessage = (message) => {
-    switch (message.type) {
+onReceiveGameMessage = (gameMessage) => {
+    switch (gameMessage.type) {
         case 'voteGameStart':
-            onReceiveStartVote(message.message);
+            onReceiveStartVote(gameMessage.message);
             break;
         case 'gameStart':
-            onReceiveGameStart(message.message);
+            onReceiveGameStart(gameMessage.message);
             break;
         case 'gameEnd':
-            onReceiveGameEnd(message.message);
+            onReceiveGameEnd(gameMessage.message);
             break;
         case 'pointerPosition':
-            onReceivePointerPosition(message.message);
+            onReceivePointerPosition(gameMessage.message);
             break;
         case 'lossEvent':
-            onReceiveLossEvent(message.message);
+            onReceiveLossEvent(gameMessage.message);
             break;
         default:
-            console.log("Default");
+            console.log("Game message type not found");
             break;
     }
 }
 
+// When the player loses, sends a lossEvent to the other players
 const sendLossEvent = () => {
     const gameMessage = new GameMessage('lossEvent', peer.myPeer._id);
     const message = new Message('gameMessage', gameMessage);
@@ -50,14 +51,17 @@ const sendLossEvent = () => {
     peer.brodcast(message);
 }
 
+// When the player receives a lossEvent, updates the player stats
 const onReceiveLossEvent = (idPeer) => {
     const loserPointer = pointerList.find((p) => p.id === idPeer);
+    
     if (loserPointer) {
         loserPointer.stats.isAlive = false;
         loosersList.push(loserPointer);
     }
 }
 
+// Sends the pointer position to the other players
 const sendPointerPosition = (x, y) => {
     const pointer = new PointerPosition(peer.myPeer._id, x, y);
     const gameMessage = new GameMessage('pointerPosition', pointer);
@@ -66,6 +70,7 @@ const sendPointerPosition = (x, y) => {
     peer.brodcast(message);
 }
 
+// When the player receives a pointerPosition, updates the pointer position
 const onReceivePointerPosition = (message) => {
     const pointerIndex = pointerList.findIndex((p) => p.id == message.id);
 
@@ -76,11 +81,15 @@ const onReceivePointerPosition = (message) => {
 };
 
 const voteForGameStart = () => {
+    // If the player is the host, starts the game
     if (peer.isHost) {
         initGame();
     } else {
+        // If the player is not the host, sends a voteGameStart to the host
         const gameMessage = new GameMessage('voteGameStart', peer.myPeer._id);
         const message = new Message('gameMessage', gameMessage);
+
+        // Send voteGameStart to host
         peer.myPeer.connections[peer.myHost][0].send(message);
     }
 }
@@ -104,7 +113,7 @@ const onReceiveStartVote = (idPeer) => {
 
 const emitGameStart = () => {
     const _circleList = JSON.parse(JSON.stringify(circleList));
-    const startMessage = new StartEvent(peer.myPeer._id, _circleList);
+    const startMessage = new StartEvent(peer.myPeer._id, { circleList: _circleList, pointerRadius: CPU_RADIUS });
     const gameMessage = new GameMessage('gameStart', startMessage);
     const message = new Message('gameMessage', gameMessage);
 
@@ -121,7 +130,7 @@ const emitGameEnd = () => {
 
 const onReceiveGameStart = (message) => {
     if (message.idPeer === peer.myHost) {
-        initGame(message.hostCircles);
+        initGame(message.startState);
     }
 }
 

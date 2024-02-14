@@ -29,7 +29,11 @@ async function createRoom() {
     const id = await peer.idPromise;
     const body = { ownerName: 'Player', id };
 
-    fetch('http://localhost:5000/room', { headers: { 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify(body) }).then((response) => {
+    fetch('http://localhost:5000/room', {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        body: JSON.stringify(body)
+    }).then((response) => {
         console.log(response);
     })
     // send to server my room infos

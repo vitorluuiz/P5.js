@@ -73,7 +73,7 @@ function loadSettings() {
             settings.options.radius
         );
     } else {
-        settings = new Settings("ON", "OFF", 10, 7, 14);
+        settings = new Settings("ON", "OFF", 10, 7, 25);
     }
 
     sessionStorage.setItem('game-settings', JSON.stringify(settings));

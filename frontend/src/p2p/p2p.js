@@ -37,6 +37,9 @@ onReceiveGameMessage = (gameMessage) => {
         case 'lossEvent':
             onReceiveLossEvent(gameMessage.message);
             break;
+        case 'playerLeft':
+            onReceivePlayerLeft(gameMessage.message);
+            break;
         default:
             console.log("Game message type not found");
             break;
@@ -60,6 +63,38 @@ const onReceiveLossEvent = (idPeer) => {
         loosersList.push(loserPointer);
     }
 }
+
+const onReceivePlayerLeft = (idPeer) => {
+    // Removes the player from the players list
+    const playerIndex = players.findIndex((e) => e.id === idPeer);
+    players.splice(playerIndex, 1);
+
+    // Removes the player pointer from the pointer list
+    const playerPointer = pointerList.find((p) => p.id === idPeer);
+
+    // Check if it's alive
+    if (playerPointer.stats.isAlive) {
+        playerPointer.stats.isAlive = false;
+        loosersList.push(playerPointer);
+
+        // If all players are dead, emit game end
+        if (loosersList.length === pointerList.length) {
+            emitGameEnd();
+        }
+    }
+
+    pointerList = pointerList.filter((p) => p.id !== idPeer);
+
+    // Other logic
+    // // Treat if the host left
+    // if (idPeer === peer.myHost) {
+    //     peer.myHost = null;
+    // }
+    // // Treat if the player is the last one
+    // if (players.length === 0) {
+    //     endGame();
+    // }
+};
 
 // Sends the pointer position to the other players
 const sendPointerPosition = (x, y) => {

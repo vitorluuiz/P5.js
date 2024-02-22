@@ -57,7 +57,7 @@ const sendLossEvent = () => {
 // When the player receives a lossEvent, updates the player stats
 const onReceiveLossEvent = (idPeer) => {
     const loserPointer = pointerList.find((p) => p.id === idPeer);
-    
+
     if (loserPointer) {
         loserPointer.stats.isAlive = false;
         loosersList.push(loserPointer);
@@ -73,7 +73,7 @@ const onReceivePlayerLeft = (idPeer) => {
     const playerPointer = pointerList.find((p) => p.id === idPeer);
 
     // Check if it's alive
-    if (playerPointer.stats.isAlive) {
+    if (pointerList.length > 0 && playerPointer.stats.isAlive) {
         playerPointer.stats.isAlive = false;
         loosersList.push(playerPointer);
 
@@ -87,8 +87,8 @@ const onReceivePlayerLeft = (idPeer) => {
 
     // Other logic
     // // Treat if the host left
-    // if (idPeer === peer.myHost) {
-    //     peer.myHost = null;
+    // if (idPeer === peer.firstConn()) {
+    //     peer.firstConn() = null;
     // }
     // // Treat if the player is the last one
     // if (players.length === 0) {
@@ -125,7 +125,7 @@ const voteForGameStart = () => {
         const message = new Message('gameMessage', gameMessage);
 
         // Send voteGameStart to host
-        peer.myPeer.connections[peer.myHost][0].send(message);
+        peer.myPeer.connections[peer.firstConn()][0].send(message);
     }
 }
 
@@ -164,7 +164,7 @@ const emitGameEnd = () => {
 }
 
 const onReceiveGameStart = (message) => {
-    if (message.idPeer === peer.myHost) {
+    if (message.idPeer === peer.firstConn()) {
         initGame(message.startState);
     }
 }

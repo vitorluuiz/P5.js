@@ -69,7 +69,7 @@ function draw() {
       loosersList.push(pointerList[0]);
 
       // If all peers are dead, emit game end
-      if (loosersList.length === pointerList.length) {
+      if (loosersList.length >= pointerList.length) {
         emitGameEnd();
       }
     }

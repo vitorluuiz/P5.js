@@ -28,8 +28,19 @@ router.post('/room', (req, res) => {
 router.delete('/room/:id', (req, res) => {
     const { id } = req.params;
     rooms = rooms.filter(room => room.id !== id);
-    
+
     res.json(rooms);
+});
+
+router.patch('/room/:id', (req, res) => {
+    const { id } = req.params;
+    const { ownerName, idPlayer } = req.body;
+
+    const index = rooms.findIndex(room => room.id === id);
+    rooms[index].owner = ownerName;
+    rooms[index].id = idPlayer;
+
+    res.json(rooms[index]);
 });
 
 // Add a player to a room

@@ -1,30 +1,20 @@
-const http = require('http');
-const fs = require('fs');
+require('dotenv').config();
+
+const express = require('express');
 const path = require('path');
 
-const server = http.createServer((req, res) => {
-    let filePath = './frontend/src' + req.url;
-    if (filePath === './frontend/src/') {
-        filePath = './frontend/src/index.html';
-    }
-    fs.readFile(filePath, (err, content) => {
-        if (err) {
-            if (err.code === 'ENOENT') {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end('404 Not Found');
-            } else {
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('500 Internal Server Error');
-            }
-        } else {
-            res.writeHead(200);
-            res.end(content, 'utf-8');
-        }
-    });
+const app = express();
+
+app.locals.API_URL = process.env.API_URL || 'http://127.0.0.1:5000';
+
+app.use(express.static(path.join(__dirname, '/src')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/src', 'index.html'));
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.STATIC_PORT || 3000;
 
-server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server running at http://127.0.0.1:${PORT}`);
 });

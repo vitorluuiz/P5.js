@@ -24,16 +24,22 @@ Git bash is a tool that you will use to install a copy from this repository stor
 
 ## Patch Notes
 
-### CirclesBox 1.0.4x
+### CirclesBox 1.2.0
+
+- Add multiplayer base
+- Refactor static server, using express.js
+- Add Dotenv
+
+### CirclesBox 1.1.1x
 
 - Fix Vercel Deploy.
 
-### CirclesBox 1.0.4
+### CirclesBox 1.1.1
 
 - Setup bugs fix.
 - Server web included to serve game client files.
 
-### CirclesBox 1.0.3
+### CirclesBox 1.1.0
 
 - Add WEB GUI.
 - Enable/Disable game sounds
@@ -51,7 +57,7 @@ Git bash is a tool that you will use to install a copy from this repository stor
 
 ### CirclesBox 1.0.1
 
-- New method to detect circle collisions, now only truly unknown collisions are tested.
+- New method to check circle collisions, now only truly unknown collisions are tested.
 - Better usage of Object-oriented programming.
 - Wall collisions are now more stable, with a lower error rate.
 - Initial X, Y position doesn't match with others circles in canvas. Preventing double spawn in the same space.

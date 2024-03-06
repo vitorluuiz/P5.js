@@ -18,6 +18,7 @@
   <script src="p2p/peer.js"></script>
   <script src="p2p/p2p.js"></script>
 
+  <script src="scripts/handleLeaderboard.js"></script>
   <script src="scripts/handleGameSettings.js"></script>
   <script src="scripts/handleRooms.js"></script>
 
@@ -50,7 +51,7 @@
       <nav class="support-nav flex-row justify-between align-center">
         <a href="#rooms-modal" onclick="getRooms()">Rooms</a>
         <a href="#settings-modal" onclick="displaySettings()">Settings</a>
-        <a href="#">Leaderboard</a>
+        <a href="#leaderboard-modal" onclick="getLeaderboard()">Leaderboard</a>
         <a href="#help-modal">Help</a>
       </nav>
     </section>
@@ -110,6 +111,15 @@
           <a class="nav-button" href="#">Cancel</a>
           <a class="nav-button" href="#" onclick="applySettings()">Apply</a>
         </nav>
+      </div>
+    </div>
+    <!-- Leaderboard modal -->
+    <div id="leaderboard-modal" class="modal">
+      <div class="modal__header">
+        <a href="#">Exit</a>
+      </div>
+      <div class="modal__content" id="leaderboard">
+        <div id="leaderboard-list"></div>
       </div>
     </div>
     <!-- Help modal -->

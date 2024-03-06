@@ -186,8 +186,26 @@ main {
   color: aliceblue;
 }
 
-#help>p{
+#help>p {
   max-width: var(--modalWidth);
+}
+
+/* Leaderboard Modal */
+#leaderboard {
+  color: aliceblue;
+}
+
+#leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--modalWidth);
+  gap: 0.5rem;
+}
+
+.record {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 /* snackbar */

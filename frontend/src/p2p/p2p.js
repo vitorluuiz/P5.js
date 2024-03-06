@@ -84,16 +84,6 @@ const onReceivePlayerLeft = (idPeer) => {
     }
 
     pointerList = pointerList.filter((p) => p.id !== idPeer);
-
-    // Other logic
-    // // Treat if the host left
-    // if (idPeer === peer.firstConn()) {
-    //     peer.firstConn() = null;
-    // }
-    // // Treat if the player is the last one
-    // if (players.length === 0) {
-    //     endGame();
-    // }
 };
 
 // Sends the pointer position to the other players

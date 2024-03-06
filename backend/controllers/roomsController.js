@@ -9,7 +9,7 @@ const Player = require('../models/player');
 let rooms = [];
 
 // Get all rooms
-router.get('/rooms', (req, res) => {
+router.get('/', (req, res) => {
     res.json(rooms);
 });
 

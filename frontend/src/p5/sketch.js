@@ -63,7 +63,15 @@ function draw() {
     if (hasCollision != -1) {
       // send loss event to others peers
       sendLossEvent();
-      
+
+      fetch(`http://localhost:5000/leaderboard`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: peer.myPeer._id, score: frameCount / FPS }),
+      })
+
       // change pointer status to dead and add to loosers list
       pointerList[0].stats.isAlive = false;
       loosersList.push(pointerList[0]);

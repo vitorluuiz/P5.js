@@ -12,7 +12,7 @@
   --darkFont: var(--darkBackground);
   --borderRadius: 1rem;
 
-  --modalWidth: 35vw;
+  --modalWidth: 45vw;
   --modalPadding: 2rem;
 }
 
@@ -73,6 +73,7 @@ main {
 /* Modal */
 .modal {
   visibility: hidden;
+  width: 100vw;
   opacity: 0;
   position: absolute;
   top: 0;
@@ -91,7 +92,7 @@ main {
   visibility: visible;
   opacity: 0.9;
   z-index: 2;
-  background-color: var(--darkBackground)
+  background-color: var(--darkBackground);
 }
 
 .modal__header {
@@ -180,6 +181,14 @@ main {
   gap: 1rem;
 }
 
+/* Help Modal */
+#help {
+  color: aliceblue;
+}
+
+#help>p{
+  max-width: var(--modalWidth);
+}
 
 /* snackbar */
 .snackbar {

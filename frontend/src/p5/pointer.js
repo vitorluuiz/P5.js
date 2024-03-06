@@ -45,7 +45,10 @@ class Pointer {
     }
 
     movePointer(newX, newY) {
+        if (newY > 0) {
+            this.cord.y = newY;
+        }
+
         this.cord.x = newX;
-        this.cord.y = newY;
     }
 }

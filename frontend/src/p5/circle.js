@@ -28,8 +28,8 @@ class Circle {
         this.cord.y += this.cord.vY;
 
         // Speed up circles over time
-        this.cord.vX *= 1.0002;
-        this.cord.vY *= 1.0002;
+        this.cord.vX *= 1.0001;
+        this.cord.vY *= 1.0001;
     }
 
     draw() {

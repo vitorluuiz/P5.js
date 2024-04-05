@@ -64,7 +64,7 @@ class CustomPeer {
                 }
 
                 // Push the new peer to the room
-                fetch(`http://localhost:5000/rooms/room/${this.myPeer._id}/playerJoin`, {
+                fetch(`${API_ROUTE}/rooms/room/${this.myPeer._id}/playerJoin`, {
                     headers: { 'Content-Type': 'application/json' },
                     method: 'PATCH',
                     body: JSON.stringify({ playerName: conn.provider._id, playerId: conn.provider._id })
@@ -90,7 +90,7 @@ class CustomPeer {
             delete this.pingList[idPeer];
 
             // Remove the peer from the room in the rooms server
-            fetch(`http://localhost:5000/rooms/room/${this.myPeer._id}/playerLeft`, {
+            fetch(`${API_ROUTE}/rooms/room/${this.myPeer._id}/playerLeft`, {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'PATCH',
                 body: JSON.stringify({ playerName: idPeer, playerId: idPeer })
@@ -137,14 +137,14 @@ class CustomPeer {
                 }
 
                 // Remove the peer from the room in the rooms server
-                fetch(`http://localhost:5000/rooms/room/${idPeer}/playerLeft`, {
+                fetch(`${API_ROUTE}/rooms/room/${idPeer}/playerLeft`, {
                     headers: { 'Content-Type': 'application/json' },
                     method: 'PATCH',
                     body: JSON.stringify({ playerName: idPeer, playerId: idPeer })
                 });
 
                 // Send to server that the host is disconnected
-                fetch(`http://localhost:5000/rooms/room/${idPeer}`, {
+                fetch(`${API_ROUTE}/rooms/room/${idPeer}`, {
                     headers: { 'Content-Type': 'application/json' },
                     method: 'PATCH',
                     body: JSON.stringify({ ownerName: this.myPeer._id, idPlayer: this.myPeer._id })

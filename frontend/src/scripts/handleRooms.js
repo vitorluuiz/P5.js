@@ -1,7 +1,7 @@
 const peer = new CustomPeer();
 
 async function getRooms() {
-    const response = await fetch('http://localhost:5000/rooms');
+    const response = await fetch(`${API_ROUTE}/rooms`);
 
     if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -29,7 +29,7 @@ async function createRoom() {
     const id = await peer.idPromise;
     const body = { ownerName: 'Player', id };
 
-    fetch('http://localhost:5000/rooms/room', {
+    fetch(`${API_ROUTE}/rooms/room`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify(body)

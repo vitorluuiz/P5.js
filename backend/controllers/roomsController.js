@@ -17,7 +17,8 @@ router.get('/', (req, res) => {
 router.post('/room', (req, res) => {
     const { ownerName, id } = req.body;
     const owner = new Player(ownerName, id);
-    const room = new Room(owner);
+    const ip = req.ip;
+    const room = new Room(owner, ip);
 
     room.players.push(owner);
     rooms.push(room);

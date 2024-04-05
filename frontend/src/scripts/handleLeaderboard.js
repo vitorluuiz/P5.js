@@ -1,5 +1,5 @@
 async function getLeaderboard() {
-    const response = await fetch('http://localhost:5000/leaderboard');
+    const response = await fetch(`${API_ROUTE}/leaderboard`);
 
     if (!response.ok) {
         throw new Error('Network response was not ok');
